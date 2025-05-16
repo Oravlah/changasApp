@@ -41,3 +41,19 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+
+
+
+.center {
+  text-align: center;
+}
+
+
+ion-tab-bar {
+  --background: #012340;
+}
+
+.colorheader {
+  --background: #012340;
+}

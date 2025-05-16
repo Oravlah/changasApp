@@ -33,20 +33,22 @@ export class AuthService {
     });
   }
 
-  login(credentials: { email: string, password: string }): Observable<{ token: string }> {
-    return this.httpClient.post<{ token: string }>(this.REST_API_AUTH_LOGIN, credentials, {
+  login(credentials: { email: string, password: string }): Observable<LoginResponse> {
+    return this.httpClient.post<LoginResponse>(this.REST_API_AUTH_LOGIN, credentials, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }).pipe(
       tap(response => {
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('access_token', response.access);
+        localStorage.setItem('refresh_token', response.refresh);
         this.isUserLogin.next(true);
       })
     );
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem('access_token');
   }
+
 
   hasToken(): boolean {
     return !!this.getToken();
@@ -59,9 +61,11 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
     this.isUserLogin.next(false);
   }
+
   validateToken(): boolean {
     const token = this.getToken();
     if (!token) {
