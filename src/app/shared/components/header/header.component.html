@@ -8,13 +8,14 @@
 
       <div class="relative">
         <button
+          #menuToggle
           (click)="isUserMenuOpen = !isUserMenuOpen"
           class="flex text-sm bg-gray-800 rounded-full focus:outline-none"
         >
           <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user" />
         </button>
 
-        <div *ngIf="isUserMenuOpen" class="absolute right-0 mt-2 w-44 bg-white rounded shadow dark:bg-gray-700">
+        <div *ngIf="isUserMenuOpen" #userMenu class="absolute right-0 mt-2 w-44 bg-white rounded shadow dark:bg-gray-700">
           <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
             <div>Bonnie Green</div>
             <div class="text-gray-500 dark:text-gray-400">namecom</div>
@@ -22,7 +23,7 @@
           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600">Dashboard</a>
           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600">Settings</a>
           <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600">Earnings</a>
-          <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600">Sign out</a>
+          <a (click)="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600">Sign out</a>
         </div>
       </div>
     </div>
