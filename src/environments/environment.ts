@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   REST_API_USERS: 'http://127.0.0.1:8000/apiuser/auth/user',
-  REST_API_AUTH_LOGIN: 'http://127.0.0.1:8000//apiuser/auth/login',
-  REST_API_AUTH_REGISTER: 'http://127.0.0.1:8000//apiuser/auth/register',
-  REST_API_AUTH_REFRESH: 'http://127.0.0.1:8000//apiuser/auth/refresh',
-  REST_API_EQUIPOS: 'http://127.0.0.1:8000/apiequipos/equipos/',
+  REST_API_AUTH_LOGIN: 'http://127.0.0.1:8000/apiuser/auth/login',
+  REST_API_AUTH_REGISTER: 'http://127.0.0.1:8000/apiuser/auth/register',
+  REST_API_AUTH_REFRESH: 'http://127.0.0.1:8000/apiuser/auth/refresh',
+  REST_API_EQUIPOS: 'http://127.0.0.1:8000/apiequipos/equipos',
 };
 
 /*

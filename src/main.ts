@@ -18,9 +18,11 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     provideToastr(),
+    provideAnimations(),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
-    provideRouter(routes, withPreloading(PreloadAllModules)), provideHttpClient(),provideAnimations(),
+    provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideHttpClient(),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,

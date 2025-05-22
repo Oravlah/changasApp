@@ -1,7 +1,9 @@
-export interface User {
+import { Equipo } from "./Equipo.model";
+
+export interface User{
   _id: string;
   email: string;
   username: string;
   password: string;
-  equipo: string;
+  equipo: Equipo | null;
 }

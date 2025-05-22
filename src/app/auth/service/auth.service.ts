@@ -34,16 +34,22 @@ export class AuthService {
   }
 
   login(credentials: { email: string, password: string }): Observable<LoginResponse> {
-    return this.httpClient.post<LoginResponse>(this.REST_API_AUTH_LOGIN, credentials, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    }).pipe(
-      tap(response => {
-        localStorage.setItem('access_token', response.access);
-        localStorage.setItem('refresh_token', response.refresh);
-        this.isUserLogin.next(true);
-      })
-    );
-  }
+  return this.httpClient.post<LoginResponse>(this.REST_API_AUTH_LOGIN, credentials, {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  }).pipe(
+    tap(response => {
+      localStorage.setItem('access_token', response.access);
+      localStorage.setItem('refresh_token', response.refresh);
+      this.isUserLogin.next(true);
+
+      // 🔽 Obtener y emitir la información del usuario
+      this.getUserInfo().subscribe(user => {
+        this.userInfo.next(user);
+      });
+    })
+  );
+}
+
 
   getToken(): string | null {
     return localStorage.getItem('access_token');

@@ -20,6 +20,7 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken = this.authService.getToken();
+    console.log('Access token en interceptor:', accessToken);
     let authReq = req;
 
     if (accessToken) {
@@ -39,9 +40,10 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   private addTokenHeader(request: HttpRequest<any>, token: string) {
     return request.clone({
-      setHeaders: { Authorization: `Bearer ${token}` }
+      headers: request.headers.set('Authorization', `Bearer ${token}`)
     });
   }
+
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing) {
