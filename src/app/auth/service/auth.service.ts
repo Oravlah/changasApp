@@ -33,7 +33,7 @@ export class AuthService {
         next: (user) => this.userInfo.next(user),
         error: (err) => {
           console.error('Error al cargar el usuario al iniciar la app:', err);
-          this.logout(); // opcional, por si el token es inválido
+          this.logout();
         }
       });
     }
@@ -53,7 +53,7 @@ export class AuthService {
       localStorage.setItem('refresh_token', response.refresh);
       this.isUserLogin.next(true);
 
-      // 🔽 Obtener y emitir la información del usuario
+      // Obtener y emitir la información del usuario
       this.getUserInfo().subscribe(user => {
         this.userInfo.next(user);
       });

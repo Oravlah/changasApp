@@ -32,5 +32,14 @@ export class UserService {
     );
   }
 
+  updateUser(id: string, user: Partial<User>): Observable<User> {
+    return this.http.put<User>(`${this.REST_API_USERS}/${id}`, user, { headers: this.httpHeaders }).pipe(
+      catchError((error) => {
+        console.error('Error al actualizar el usuario:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
 
 }
