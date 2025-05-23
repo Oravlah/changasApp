@@ -3,19 +3,28 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-  <ion-card-header>
-    <ion-card-title>Card Title</ion-card-title>
-    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-  </ion-card-header>
+  <ion-card class="center">
+    <ion-card-header>
+      <ion-card-title>Equipo</ion-card-title>
+      <ion-card-subtitle>{{equipo?.nombre}}</ion-card-subtitle>
+    </ion-card-header>
 
-  <ion-card-content>
-    datos usuario: {{user?.email}}
-    datos usuario: {{equipo?.nombre}}
-    <ion-button expand="full" color="primary">
-      user
-    </ion-button>
-  </ion-card-content>
-</ion-card>
+    <ion-card-content>
+
+      <!-- Condición para mostrar contenido según si existe equipo -->
+      <div *ngIf="equipo && equipo.nombre; else noEquipo">
+        <p><strong>Nombre del equipo:</strong> {{ equipo.nombre }}</p>
+        <p><strong>Descripción:</strong> {{ equipo.descripcion }}</p>
+        <p><strong>Fecha de creación:</strong> {{ equipo.fecha_creacion }}</p>
+      </div>
+
+      <!-- Sección que se muestra si no hay equipo -->
+      <ng-template #noEquipo>
+        <p style="color: gray; font-style: italic;">Seleccionar equipo</p>
+        <ion-button expand="full" color="primary">
+          Ingresar equipo
+      </ion-button>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
-

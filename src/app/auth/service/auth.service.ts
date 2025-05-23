@@ -26,6 +26,17 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient, private router: Router) {
     this.monitorTokenChanges();
+
+    const token = this.getToken();
+    if (token && !this.userInfo.value) {
+      this.getUserInfo().subscribe({
+        next: (user) => this.userInfo.next(user),
+        error: (err) => {
+          console.error('Error al cargar el usuario al iniciar la app:', err);
+          this.logout(); // opcional, por si el token es inválido
+        }
+      });
+    }
    }
    register(user: Partial<User>): Observable<RegisterResponse> {
     return this.httpClient.post<RegisterResponse>(this.REST_API_AUTH_REGISTER, user, {

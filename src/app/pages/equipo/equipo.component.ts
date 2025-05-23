@@ -24,7 +24,6 @@ export class EquipoComponent  implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getUserData();
     this.authService.userInfo.subscribe(userData => {
       if (userData) {
         this.user = userData;
