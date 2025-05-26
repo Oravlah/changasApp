@@ -20,5 +20,13 @@ export class EquipoService {
 
   constructor(private http: HttpClient) { }
 
+  getEquipos(): Observable<Equipo[]> {
+    return this.http.get<Equipo[]>(this.REST_API_EQUIPOS).pipe(
+      catchError((error) => {
+        console.error('Error al obtener los equipos:', error);
+        return throwError(() => error);
+      })
+    )
+  }
 
 }

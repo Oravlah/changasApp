@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, tap, throwError, catchError } from 'rxjs';
 import { User } from 'src/app/shared/models/User.model';
 import { RegisterResponse } from '../models/RegisterResponse.model';
 import { LoginResponse } from '../models/LoginResponse.model';
@@ -26,40 +26,46 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient, private router: Router) {
     this.monitorTokenChanges();
+    this.loadUserInfo();
+    setInterval(() => { this.loadUserInfo(); }, 5000);
+  }
 
+  private loadUserInfo(): void {
     const token = this.getToken();
-    if (token && !this.userInfo.value) {
-      this.getUserInfo().subscribe({
-        next: (user) => this.userInfo.next(user),
-        error: (err) => {
-          console.error('Error al cargar el usuario al iniciar la app:', err);
-          this.logout();
-        }
-      });
+    if (token && this.validateToken()) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      this.httpClient.get<User>(this.REST_API_USERS, { headers })
+        .pipe(catchError(this.handleError))
+        .subscribe(user => {
+          this.userInfo.next(user);
+        });
+    } else {
+      this.userInfo.next(null);
     }
-   }
-   register(user: Partial<User>): Observable<RegisterResponse> {
+  }
+
+  register(user: Partial<User>): Observable<RegisterResponse> {
     return this.httpClient.post<RegisterResponse>(this.REST_API_AUTH_REGISTER, user, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
   }
 
   login(credentials: { email: string, password: string }): Observable<LoginResponse> {
-  return this.httpClient.post<LoginResponse>(this.REST_API_AUTH_LOGIN, credentials, {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  }).pipe(
-    tap(response => {
-      localStorage.setItem('access_token', response.access);
-      localStorage.setItem('refresh_token', response.refresh);
-      this.isUserLogin.next(true);
+    return this.httpClient.post<LoginResponse>(this.REST_API_AUTH_LOGIN, credentials, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }).pipe(
+      tap(response => {
+        localStorage.setItem('access_token', response.access);
+        localStorage.setItem('refresh_token', response.refresh);
+        this.isUserLogin.next(true);
 
-      // Obtener y emitir la información del usuario
-      this.getUserInfo().subscribe(user => {
-        this.userInfo.next(user);
-      });
-    })
-  );
-}
+        // Obtener y emitir la información del usuario
+        this.getUserInfo().subscribe(user => {
+          this.userInfo.next(user);
+        });
+      })
+    );
+  }
 
 
   getToken(): string | null {
@@ -127,5 +133,15 @@ export class AuthService {
         }
       }
     });
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = error.error.message;
+    } else {
+      errorMessage = `Error Code: ${error.status}. Message: ${error.message}`;
+    }
+    return throwError(() => new Error(errorMessage));
   }
 }

@@ -1,30 +1,43 @@
 <ion-header>
-    <app-header></app-header>
+  <app-header></app-header>
 </ion-header>
 
 <ion-content>
   <ion-card class="center">
     <ion-card-header>
       <ion-card-title>Equipo</ion-card-title>
-      <ion-card-subtitle>{{equipo?.nombre}}</ion-card-subtitle>
+      <ion-card-subtitle>{{ equipo?.nombre }}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
 
-      <!-- Condición para mostrar contenido según si existe equipo -->
+      <!-- Mostrar detalles si el usuario tiene equipo -->
       <div *ngIf="equipo && equipo.nombre; else noEquipo">
         <p><strong>Nombre del equipo:</strong> {{ equipo.nombre }}</p>
         <p><strong>Descripción:</strong> {{ equipo.descripcion }}</p>
         <p><strong>Fecha de creación:</strong> {{ equipo.fecha_creacion }}</p>
       </div>
 
-      <!-- Sección que se muestra si no hay equipo -->
+      <!-- Si no hay equipo, mostrar selector para asignar uno -->
       <ng-template #noEquipo>
         <p style="color: gray; font-style: italic;">Seleccionar equipo</p>
-        <ion-button expand="full" color="primary">
-          Ingresar equipo
-        </ion-button>
+
+        <form [formGroup]="updateForm" (ngSubmit)="assignEquipoToUser()">
+          <ion-item>
+            <ion-label>Equipo</ion-label>
+            <ion-select formControlName="equipo" placeholder="Seleccione un equipo">
+              <ion-select-option *ngFor="let eq of equipos" [value]="eq.id">
+                {{ eq.nombre }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-button expand="full" type="submit" [disabled]="updateForm.invalid">
+            Ingresar equipo
+          </ion-button>
+        </form>
       </ng-template>
+
     </ion-card-content>
   </ion-card>
 </ion-content>

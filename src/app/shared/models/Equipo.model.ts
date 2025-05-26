@@ -1,5 +1,5 @@
 export interface Equipo{
-  _id: string;
+  id: string;
   nombre: string;
   descripcion: string;
   fecha_creacion: string;

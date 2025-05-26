@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
 import { User } from '../models/User.model';
+import { AuthService } from 'src/app/auth/service/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,28 +19,31 @@ export class UserService {
   public users$: Observable<User[]> = this.usersSubject.asObservable();
 
 
-  constructor(private http: HttpClient) {
-    this.getUserInfo();
-   }
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getUserInfo(): Observable<User> {
-    return this.http.get<User>(this.REST_API_USERS).pipe(
-      catchError((error) => {
-        console.error('Error al obtener el usuario actual:', error);
-        console.error('Error al obtener usuario actual:', error);
-        return throwError(() => error);
-      })
+  updateUserPartial(changes: Partial<User>): Observable<User> {
+    const token = this.authService.getToken();
+    if (!token) {
+      return throwError(() => new Error('No se encontró token de autenticación'));
+    }
+
+    const headers = this.httpHeaders.set('Authorization', `Bearer ${token}`);
+
+    return this.http.patch<User>(this.REST_API_USERS, changes, { headers }).pipe(
+      catchError(this.handleError)
     );
   }
 
-  updateUser(id: string, user: Partial<User>): Observable<User> {
-    return this.http.put<User>(`${this.REST_API_USERS}/${id}`, user, { headers: this.httpHeaders }).pipe(
-      catchError((error) => {
-        console.error('Error al actualizar el usuario:', error);
-        return throwError(() => error);
-      })
-    );
-  }
 
+  private handleError(error: any) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
+  }
 
 }
