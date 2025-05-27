@@ -24,8 +24,18 @@ export class HistorialComponent  implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadPartidos();
-  }
+  this.partidoService.Partidos$.subscribe({
+    next: (partidos) => {
+      console.log('Actualización de partidos:', partidos);
+      this.partidos = partidos;
+    },
+    error: (err) => {
+      console.error('Error al recibir partidos:', err);
+      this.toastr.error('No se pudieron cargar los partidos');
+    }
+  });
+}
+
 
   loadPartidos(): void {
     this.partidoService.getPartidos().subscribe({
