@@ -87,6 +87,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     this.isUserLogin.next(false);
+    this.router.navigate(['/login']);
   }
 
   validateToken(): boolean {

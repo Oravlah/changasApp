@@ -1,5 +1,5 @@
 export interface Partido{
-  _id: string;
+  id: string;
   nombre: string;
   fecha: string;
   hora: string;

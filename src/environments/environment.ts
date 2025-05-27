@@ -9,6 +9,7 @@ export const environment = {
   REST_API_AUTH_REGISTER: 'http://127.0.0.1:8000/apiuser/auth/register',
   REST_API_AUTH_REFRESH: 'http://127.0.0.1:8000/apiuser/auth/refresh',
   REST_API_EQUIPOS: 'http://127.0.0.1:8000/apiequipos/equipos',
+  REST_API_PARTIDOS: 'http://127.0.0.1:8000/apipartidos/partidos',
 };
 
 /*
