@@ -4,6 +4,8 @@ export interface Partido{
   fecha: string;
   hora: string;
   lugar: string;
-  equipo_loal: string;
+  equipo_local: string;
   equipo_visitante: string;
+  goles_local: number;
+  goles_visitante: number;
 }
