@@ -1,18 +1,89 @@
+<!-- historial.html -->
 <ion-header>
-    <app-header></app-header>
+  <app-header></app-header>
 </ion-header>
 
 <ion-content>
   <ion-card *ngFor="let partido of partidos" class="center">
     <ion-card-header>
-      <ion-card-title>{{partido.nombre}}</ion-card-title>
-      <ion-card-subtitle>Fecha: {{partido.fecha}}</ion-card-subtitle>
+      <ion-card-title>{{ partido.nombre }}</ion-card-title>
+      <ion-card-subtitle>Fecha: {{ partido.fecha }}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
-     {{partido.goles_local}} :
-     {{partido.goles_visitante}}
+      {{ partido.goles_local }} : {{ partido.goles_visitante }}
+      <ion-button (click)="openModal(partido)" expand="block">Open</ion-button>
+      <ion-button (click)="openEditModal(partido)" color="warning" expand="block">Editar</ion-button>
     </ion-card-content>
   </ion-card>
-</ion-content>
 
+  <!-- ÚNICA instancia del modal -->
+  <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title>Detalle Partido</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding center">
+        <p><strong>{{ infoPartidos?.nombre}}</strong></p>
+        <p><strong>Fecha: {{ infoPartidos?.fecha}}</strong></p>
+        <p><strong>Hora: {{ infoPartidos?.hora}}</strong></p>
+        <p><strong>Lugar: {{ infoPartidos?.lugar}}</strong></p>
+        <p>Goles: {{ infoPartidos?.goles_local }} - {{ infoPartidos?.goles_visitante }}</p>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+
+  <ion-modal [isOpen]="isEditModalOpen" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancelEdit()">Cancelar</ion-button>
+          </ion-buttons>
+          <ion-title>Editar Partido</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="onSubmit()" [strong]="true">Guardar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <form [formGroup]="updateForm">
+          <ion-item>
+            <ion-input formControlName="nombre" label="Nombre"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="fecha" label="Fecha" type="date"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="hora" label="Hora" type="time"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="lugar" label="Lugar"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="equipo_local" label="Equipo Local"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="equipo_visitante" label="Equipo Visitante"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="goles_local" type="number" label="Goles Local"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input formControlName="goles_visitante" type="number" label="Goles Visitante"></ion-input>
+          </ion-item>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

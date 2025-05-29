@@ -40,6 +40,12 @@ export class PartidoService implements OnDestroy {
     );
   }
 
+  editPartido(id: string, partido: Partido): Observable<Partido> {
+    return this.http.put<Partido>(`${this.REST_API_PARTIDOS}/${id}`, partido, { headers: this.httpHeaders }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   ngOnDestroy(): void {
     this.refreshSub?.unsubscribe();
   }
