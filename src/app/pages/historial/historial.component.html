@@ -1,4 +1,3 @@
-<!-- historial.html -->
 <ion-header>
   <app-header></app-header>
 </ion-header>
@@ -11,7 +10,6 @@
     </ion-card-header>
 
     <ion-card-content>
-      {{ partido.goles_local }} : {{ partido.goles_visitante }}
       <ion-button (click)="openModal(partido)" expand="block">Open</ion-button>
       <ion-button (click)="openEditModal(partido)" color="warning" expand="block">Editar</ion-button>
     </ion-card-content>
@@ -55,35 +53,51 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-
       <ion-content class="ion-padding">
         <form [formGroup]="updateForm">
           <ion-item>
-            <ion-input formControlName="nombre" label="Nombre"></ion-input>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input type="text" formControlName="nombre"></ion-input>
           </ion-item>
+
           <ion-item>
-            <ion-input formControlName="fecha" label="Fecha" type="date"></ion-input>
+            <ion-label position="floating">Fecha</ion-label>
+            <ion-input type="date" formControlName="fecha"></ion-input>
           </ion-item>
+
           <ion-item>
-            <ion-input formControlName="hora" label="Hora" type="time"></ion-input>
+            <ion-label position="floating">Hora</ion-label>
+            <ion-input type="time" formControlName="hora"></ion-input>
           </ion-item>
+
           <ion-item>
-            <ion-input formControlName="lugar" label="Lugar"></ion-input>
+            <ion-label position="floating">Lugar</ion-label>
+            <ion-input type="text" formControlName="lugar"></ion-input>
           </ion-item>
+
           <ion-item>
-            <ion-input formControlName="equipo_local" label="Equipo Local"></ion-input>
+            <ion-label position="floating">Equipo Local</ion-label>
+            <ion-input type="text" formControlName="equipo_local"></ion-input>
           </ion-item>
+
           <ion-item>
-            <ion-input formControlName="equipo_visitante" label="Equipo Visitante"></ion-input>
+            <ion-label position="floating">Equipo Visitante</ion-label>
+            <ion-input type="text" formControlName="equipo_visitante"></ion-input>
           </ion-item>
+
           <ion-item>
-            <ion-input formControlName="goles_local" type="number" label="Goles Local"></ion-input>
+            <ion-label position="floating">Goles Local</ion-label>
+            <ion-input type="number" formControlName="goles_local"></ion-input>
           </ion-item>
+
           <ion-item>
-            <ion-input formControlName="goles_visitante" type="number" label="Goles Visitante"></ion-input>
+            <ion-label position="floating">Goles Visitante</ion-label>
+            <ion-input type="number" formControlName="goles_visitante"></ion-input>
           </ion-item>
+
         </form>
       </ion-content>
+
     </ng-template>
   </ion-modal>
 </ion-content>
