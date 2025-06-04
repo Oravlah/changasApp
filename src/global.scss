@@ -43,6 +43,13 @@
 @import "tailwindcss/utilities";
 
 
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
 
 
 .center {
@@ -56,4 +63,11 @@ ion-tab-bar {
 
 .colorheader {
   --background: #012340;
+}
+
+
+
+ion-content{
+  --background: url('./assets/img/fondofutbol.jpg') 0 0/100% 100% no-repeat;
+
 }
