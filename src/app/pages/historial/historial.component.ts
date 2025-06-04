@@ -8,6 +8,7 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
 import { PartidoService } from 'src/app/shared/services/partido.service';
 import { Partido } from 'src/app/shared/models/Partido.model';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/auth/service/auth.service';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class HistorialComponent  implements OnInit {
   constructor(
     private partidoService: PartidoService,
     private fb: FormBuilder,
+    private authService: AuthService,
   ) {
     this.updateForm = this.fb.group({
       nombre: ['', [Validators.required]],
@@ -45,17 +47,33 @@ export class HistorialComponent  implements OnInit {
   }
 
   ngOnInit(): void {
-    this.partidoService.Partidos$.subscribe({
-      next: (partidos) => {
-        console.log('Actualización de partidos:', partidos);
-        this.partidos = partidos;
+    this.authService.userInfo.subscribe({
+      next: (user) => {
+        if (!user || !user.equipo || !user.equipo.id) {
+          console.log('Usuario no autenticado o sin equipo asociado');
+          return;
+        }
+
+        const equipoId = user.equipo.id;
+
+        this.partidoService.Partidos$.subscribe({
+          next: (partidos) => {
+            this.partidos = partidos.filter(p =>
+              p.equipo_local === equipoId || p.equipo_visitante === equipoId
+            );
+          },
+          error: (err) => {
+            console.error('Error al recibir partidos:', err);
+            this.toastr.error('No se pudieron cargar los partidos');
+          }
+        });
       },
-      error: (err) => {
-        console.error('Error al recibir partidos:', err);
-        this.toastr.error('No se pudieron cargar los partidos');
+      error: () => {
+        console.log('Error al obtener la información del usuario');
       }
     });
   }
+
 
   openModal(partido: Partido) {
     this.infoPartidos = partido;
