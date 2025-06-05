@@ -3,7 +3,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let partido of partidos" class="center">
+  <ng-container *ngIf="partidos.length > 0; else noPartidos">
+    <ion-card *ngFor="let partido of partidos" class="center">
     <ion-card-header>
       <ion-card-title>{{ partido.nombre }}</ion-card-title>
       <ion-card-subtitle>Fecha: {{ partido.fecha }}</ion-card-subtitle>
@@ -14,6 +15,21 @@
       <ion-button (click)="openEditModal(partido)" color="warning" expand="block">Editar</ion-button>
     </ion-card-content>
   </ion-card>
+  </ng-container>
+
+
+  <ng-template #noPartidos>
+    <div class="content center ion-padding">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>No hay partidos registrados para el equipo afiliado</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Registre un partido para comenzar.</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ng-template>
 
   <!-- ÚNICA instancia del modal -->
   <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
