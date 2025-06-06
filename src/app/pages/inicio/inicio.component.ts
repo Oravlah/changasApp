@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { IonHeader, IonContent, IonCard } from '@ionic/angular/standalone';
+import { IonHeader, IonContent, IonCard} from '@ionic/angular/standalone';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { PartidoService } from 'src/app/shared/services/partido.service';

@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { IonTabButton, IonIcon, IonTabs, IonLabel, IonTabBar} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { ellipse, square, triangle, list, home, football} from 'ionicons/icons';
-import { HeaderComponent } from '../header/header.component';
 import { RouterModule } from '@angular/router';
 
 
