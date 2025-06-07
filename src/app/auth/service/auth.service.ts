@@ -44,6 +44,21 @@ export class AuthService {
     }
   }
 
+  deleteUser(): Observable<any> {
+    const token = this.getToken();
+    if (!token) {
+      return throwError(() => new Error('No token found'));
+    }
+
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.delete<any>(this.REST_API_USERS, { headers }).pipe(
+      tap(() => {
+        this.logout();
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   register(user: Partial<User>): Observable<RegisterResponse> {
     return this.httpClient.post<RegisterResponse>(this.REST_API_AUTH_REGISTER, user, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
