@@ -2,17 +2,39 @@
   <app-header></app-header>
 </ion-header>
 
-<ion-content>
-  <div class="content">
+<ion-content class="ion-padding">
+  <ion-card class="center">
+      <ion-card-header>
+        <i class="fa-light fa-user fa-beat fa-2xl" style="color: #63E6BE;"></i>
+        <ion-card-title>Perfil</ion-card-title>
+        <div class="flex flex-col items-center pb-10">
+          <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="../../../assets/img/users-vector-icon-png_260862.jpg" alt="Bonnie image"/>
+          <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{userinfo?.username}}</h5>
+          <span class="text-sm text-gray-500 dark:text-gray-400">{{userinfo?.email}}</span>
+          <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{userinfo?.equipo?.nombre}}</h5>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <div *ngIf="userinfo && userinfo.equipo?.nombre; else noEquipo">
+          <button (click)="quitarEquipo()" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Salir del equipo</button>
+        </div>
+
+        <!-- Si no hay equipo, mostrar selector para asignar uno -->
+        <ng-template #noEquipo>
+          <p style="color: gray; font-style: italic;">Sin equipo asignado</p>
+        </ng-template>
+
+      </ion-card-content>
+    </ion-card>
+
     <ion-card class="center">
-    <ion-card-header>
-      <ion-card-title>Equipo</ion-card-title>
-      <ion-card-subtitle>subtitulo</ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-
-    </ion-card-content>
-  </ion-card>
-  </div>
+      <ion-card-content>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 ion-padding">
+          <button (click)="logOut()" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Cerrar Sesión</button>
+          <button (click)="deleteUser()" type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Borrar cuenta</button>
+        </div>
+      </ion-card-content>
+    </ion-card>
 </ion-content>
