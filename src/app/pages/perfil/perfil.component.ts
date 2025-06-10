@@ -7,6 +7,7 @@ import { User } from 'src/app/shared/models/User.model';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/shared/services/user.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -21,7 +22,8 @@ export class PerfilComponent  implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -39,19 +41,34 @@ export class PerfilComponent  implements OnInit {
     })
   }
 
-  deleteUser():void {
-    this.authService.deleteUser().subscribe({
-      next: () => {
-        this.authService.logout();
-        console.log('Usuario eliminado correctamente');
-        this.toastr.success('Usuario eliminado correctamente');
-      },
-      error: (err) => {
-        console.error('Error al eliminar el usuario:', err);
-        this.toastr.error('Error al eliminar el usuario');
-      }
-    });
+  deleteUser(): void {
+    this.alertController.create({
+      header: '¿Estás seguro?',
+      message: 'Esta acción eliminará tu cuenta permanentemente.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Sí, eliminar',
+          handler: () => {
+            this.authService.deleteUser().subscribe({
+              next: () => {
+                this.authService.logout();
+                this.toastr.success('Usuario eliminado correctamente');
+              },
+              error: (err) => {
+                console.error('Error al eliminar el usuario:', err);
+                this.toastr.error('Error al eliminar el usuario');
+              }
+            });
+          }
+        }
+      ]
+    }).then(alert => alert.present());
   }
+
 
 
   quitarEquipo():void {
