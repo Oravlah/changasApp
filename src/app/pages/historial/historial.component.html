@@ -93,12 +93,21 @@
 
           <ion-item>
             <ion-label position="floating">Equipo Local</ion-label>
-            <ion-input type="text" formControlName="equipo_local"></ion-input>
+
+            <ion-select formControlName="equipo_local">
+              <ion-select-option *ngFor="let equipos of equipo" [value]="equipos.id">
+                {{ equipos.nombre }}
+              </ion-select-option>
+            </ion-select>
           </ion-item>
 
           <ion-item>
             <ion-label position="floating">Equipo Visitante</ion-label>
-            <ion-input type="text" formControlName="equipo_visitante"></ion-input>
+            <ion-select formControlName="equipo_visitante">
+              <ion-select-option *ngFor="let equipos of equipo" [value]="equipos.id">
+                {{ equipos.nombre }}
+              </ion-select-option>
+            </ion-select>
           </ion-item>
 
           <ion-item>

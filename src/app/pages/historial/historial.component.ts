@@ -2,25 +2,28 @@ import { Component, OnInit, inject, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonHeader, IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardSubtitle, IonCardContent, IonButton, IonToolbar, IonButtons, IonTitle, IonItem, IonModal, IonLabel, IonInput } from "@ionic/angular/standalone";
+import { IonSelect, IonSelectOption, IonHeader, IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardSubtitle, IonCardContent, IonButton, IonToolbar, IonButtons, IonTitle, IonItem, IonModal, IonLabel, IonInput } from "@ionic/angular/standalone";
 import { OverlayEventDetail } from '@ionic/core/components';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { PartidoService } from 'src/app/shared/services/partido.service';
 import { Partido } from 'src/app/shared/models/Partido.model';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/service/auth.service';
+import { Equipo } from 'src/app/shared/models/Equipo.model';
+import { EquipoService } from 'src/app/shared/services/equipo.service';
 
 
 @Component({
   selector: 'app-historial',
   standalone: true,
-  imports: [IonInput, IonLabel, IonItem, ReactiveFormsModule, IonModal, IonTitle, IonButtons, IonToolbar, IonButton, HeaderComponent, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonCard, IonContent, IonHeader, CommonModule, RouterModule],
+  imports: [IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, ReactiveFormsModule, IonModal, IonTitle, IonButtons, IonToolbar, IonButton, HeaderComponent, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonCard, IonContent, IonHeader, CommonModule, RouterModule],
   templateUrl: './historial.component.html',
   styleUrls: ['./historial.component.scss'],
 })
 export class HistorialComponent  implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
   updateForm: FormGroup;
+  equipo: Equipo[] = [];
   partidos: Partido[] = [];
   infoPartidos: Partido | null = null;
   isModalOpen = false;
@@ -33,6 +36,7 @@ export class HistorialComponent  implements OnInit {
     private partidoService: PartidoService,
     private fb: FormBuilder,
     private authService: AuthService,
+    private equipoService: EquipoService
   ) {
     this.updateForm = this.fb.group({
       nombre: ['', [Validators.required]],
@@ -72,6 +76,17 @@ export class HistorialComponent  implements OnInit {
         console.log('Error al obtener la información del usuario');
       }
     });
+
+    this.equipoService.getEquipos().subscribe({
+      next: (equipos) => {
+        this.equipo = equipos;
+      },
+      error: (err) => {
+        console.error('Error al cargar equipos:', err);
+        this.toastr.error('No se pudieron cargar los equipos');
+      }
+    });
+
   }
 
 
@@ -96,6 +111,12 @@ export class HistorialComponent  implements OnInit {
   }
 
 
+  obtenerNombreEquipo(equipoId: string): string {
+    const equipo = this.equipo.find(e => e.id === equipoId);
+    return equipo ? equipo.nombre : 'Desconocido';
+  }
+
+
   loadPartidos(): void {
     this.partidoService.getPartidos().subscribe({
       next: (partidos) => {
@@ -109,14 +130,13 @@ export class HistorialComponent  implements OnInit {
     });
   }
 
-
-
   openEditModal(partido: Partido) {
     console.log('Abriendo modal de edición para el partido:', partido);
     this.partidoEditando = partido;
     this.updateForm.patchValue(partido);
     this.isEditModalOpen = true;
   }
+
 
   cancelEdit() {
     this.isEditModalOpen = false;
@@ -146,7 +166,5 @@ export class HistorialComponent  implements OnInit {
       }
     });
   }
-
-
 
 }
