@@ -31,7 +31,6 @@ export class HistorialComponent  implements OnInit {
   isEditModalOpen = false;
   partidoEditando: Partido | null = null;
 
-
   constructor(
     private partidoService: PartidoService,
     private fb: FormBuilder,
