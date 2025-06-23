@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonSelect, IonSelectOption, IonHeader, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton, IonItem, IonLabel } from "@ionic/angular/standalone";
+import { IonSelect, IonSelectOption, IonHeader, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton, IonItem, IonLabel, IonIcon, IonGrid, IonRow, IonCol } from "@ionic/angular/standalone";
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { User } from 'src/app/shared/models/User.model';
@@ -14,7 +14,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-equipo',
   standalone: true,
-  imports: [IonSelect, IonSelectOption, IonItem , IonLabel, ReactiveFormsModule, IonButton, HeaderComponent, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, CommonModule, RouterModule],
+  imports: [IonCol, IonRow, IonGrid, IonIcon, IonSelect, IonSelectOption, IonItem , IonLabel, ReactiveFormsModule, IonButton, HeaderComponent, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, CommonModule, RouterModule],
   templateUrl: './equipo.component.html',
   styleUrls: ['./equipo.component.scss'],
 })
