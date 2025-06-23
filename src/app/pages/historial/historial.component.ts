@@ -2,7 +2,7 @@ import { Component, OnInit, inject, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonSelect, IonSelectOption, IonHeader, IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardSubtitle, IonCardContent, IonButton, IonToolbar, IonButtons, IonTitle, IonItem, IonModal, IonLabel, IonInput } from "@ionic/angular/standalone";
+import { IonSelect, IonSelectOption, IonHeader, IonContent, IonCard, IonCardTitle, IonCardHeader, IonCardSubtitle, IonCardContent, IonButton, IonToolbar, IonButtons, IonTitle, IonItem, IonModal, IonLabel, IonInput, IonList, IonIcon } from "@ionic/angular/standalone";
 import { OverlayEventDetail } from '@ionic/core/components';
 import { HeaderComponent } from 'src/app/shared/components/header/header.component';
 import { PartidoService } from 'src/app/shared/services/partido.service';
@@ -16,7 +16,7 @@ import { EquipoService } from 'src/app/shared/services/equipo.service';
 @Component({
   selector: 'app-historial',
   standalone: true,
-  imports: [IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, ReactiveFormsModule, IonModal, IonTitle, IonButtons, IonToolbar, IonButton, HeaderComponent, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonCard, IonContent, IonHeader, CommonModule, RouterModule],
+  imports: [IonIcon, IonList, IonSelect, IonSelectOption, IonInput, IonLabel, IonItem, ReactiveFormsModule, IonModal, IonTitle, IonButtons, IonToolbar, IonButton, HeaderComponent, IonCardContent, IonCardSubtitle, IonCardHeader, IonCardTitle, IonCard, IonContent, IonHeader, CommonModule, RouterModule],
   templateUrl: './historial.component.html',
   styleUrls: ['./historial.component.scss'],
 })
