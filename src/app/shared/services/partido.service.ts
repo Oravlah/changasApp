@@ -46,6 +46,11 @@ export class PartidoService implements OnDestroy {
     );
   }
 
+  createPartido(partido: Partido){
+    return this.http.post<Partido>(`${this.REST_API_PARTIDOS}/`, partido, { headers: this.httpHeaders }).pipe(
+      catchError(this.handleError)
+    );
+  }
 
   ngOnDestroy(): void {
     this.refreshSub?.unsubscribe();

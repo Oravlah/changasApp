@@ -25,13 +25,13 @@
           <ion-card-title>No hay partidos registrados para el equipo afiliado</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <p>Registre un partido para comenzar.</p>
+          <p>Registrese en un equipo para poder ver los partidos.</p>
         </ion-card-content>
       </ion-card>
     </div>
   </ng-template>
 
-  <!-- ÚNICA instancia del modal -->
+  <!-- Modal para ver detalles del partido -->
   <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)">
     <ng-template>
 
@@ -56,7 +56,7 @@
     </ng-template>
   </ion-modal>
 
-
+  <!-- Modal para editar un partido -->
   <ion-modal [isOpen]="isEditModalOpen" (willDismiss)="onWillDismiss($event)">
     <ng-template>
       <ion-content>
@@ -128,5 +128,89 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="openCreateModal()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+
+  <!-- Modal para crear un nuevo partido -->
+  <ion-modal [isOpen]="isCreateModalOpen" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-content>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Crear Nuevo Partido</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form [formGroup]="createForm">
+              <ion-list lines="inset">
+
+                <ion-item>
+                  <ion-label position="floating">Nombre</ion-label>
+                  <ion-input type="text" formControlName="nombre"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Fecha</ion-label>
+                  <ion-input type="date" formControlName="fecha"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Hora</ion-label>
+                  <ion-input type="time" formControlName="hora"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Lugar</ion-label>
+                  <ion-input type="text" formControlName="lugar"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Equipo Local</ion-label>
+                  <ion-select formControlName="equipo_local">
+                    <ion-select-option *ngFor="let equipos of equipo" [value]="equipos.id">
+                      {{ equipos.nombre }}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Equipo Visitante</ion-label>
+                  <ion-select formControlName="equipo_visitante">
+                    <ion-select-option *ngFor="let equipos of equipo" [value]="equipos.id">
+                      {{ equipos.nombre }}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Goles Local</ion-label>
+                  <ion-input type="number" formControlName="goles_local"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Goles Visitante</ion-label>
+                  <ion-input type="number" formControlName="goles_visitante"></ion-input>
+                </ion-item>
+
+              </ion-list>
+            </form>
+
+            <div class="grid grid-cols-2 gap-4 ion-padding">
+              <ion-button expand="block" (click)="onCreateSubmit()">Guardar</ion-button>
+              <ion-button expand="block" fill="outline" color="medium" (click)="cancelCreate()">Cancelar</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+
 
 </ion-content>
