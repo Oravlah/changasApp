@@ -4,5 +4,6 @@ export interface Equipo{
   descripcion: string;
   fecha_creacion: string;
   fecha_modificacion: string;
+  posicion: number;
   imagen: string;
 }

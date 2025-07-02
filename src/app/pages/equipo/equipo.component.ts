@@ -14,7 +14,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-equipo',
   standalone: true,
-  imports: [IonCol, IonRow, IonGrid, IonIcon, IonSelect, IonSelectOption, IonItem , IonLabel, ReactiveFormsModule, IonButton, HeaderComponent, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, CommonModule, RouterModule],
+  imports: [ IonCol, IonRow, IonGrid, IonIcon, IonSelect, IonSelectOption, IonItem , IonLabel, ReactiveFormsModule, IonButton, HeaderComponent, IonCardContent, IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard, IonContent, IonHeader, CommonModule, RouterModule],
   templateUrl: './equipo.component.html',
   styleUrls: ['./equipo.component.scss'],
 })
