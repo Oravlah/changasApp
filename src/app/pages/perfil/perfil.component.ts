@@ -72,17 +72,32 @@ export class PerfilComponent  implements OnInit {
 
 
   quitarEquipo():void {
-    this.userService.updateUserPartial({ equipo: null }).subscribe({
-      next: (user) => {
-        this.userinfo = user;
-        console.log('Equipo quitado correctamente');
-        this.toastr.success('Equipo quitado correctamente');
-      },
-      error: (err) => {
-        console.error('Error al quitar el equipo:', err);
-        this.toastr.error('Error al quitar el equipo');
-      }
-    })
+    this.alertController.create({
+      header: '¿Estás seguro?',
+      message: 'Esta acción quitará tu equipo y no podrás participar en los partidos.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Sí, quitar equipo',
+          handler: () => {
+            this.userService.updateUserPartial({ equipo: null }).subscribe({
+              next: (user) => {
+                this.userinfo = user;
+                console.log('Equipo quitado correctamente');
+                this.toastr.success('Equipo quitado correctamente');
+              },
+              error: (err) => {
+                console.error('Error al quitar el equipo:', err);
+                this.toastr.error('Error al quitar el equipo');
+              }
+            })
+          }
+        }
+      ]
+    }).then(alert => alert.present());
   }
 
   logOut():void {
