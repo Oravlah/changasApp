@@ -28,11 +28,18 @@
 
   <ion-card>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 ion-padding">
+
       <div class="center">
-        <p>Partidos totales: <strong>{{ cantidadPartidos }}</strong></p>
+        <p>Partidos totales</p>
+        <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 dark:bg-gray-800 dark:border-gray-700">
+          <strong>{{ cantidadPartidos }}</strong>
+        </div>
       </div>
-      <div>
-        <p>Posición equipo: <strong>{{ equipo?.posicion }}</strong></p>
+      <div class="center">
+        <p>Posición equipo</p>
+        <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 dark:bg-gray-800 dark:border-gray-700">
+          <strong>{{ equipo?.posicion }}</strong>
+        </div>
       </div>
     </div>
   </ion-card>
