@@ -13,11 +13,41 @@
           </ion-card-header>
 
           <ion-card-content>
-            <p><strong>Posición actual:</strong> {{ equipo.posicion }}</p>
-            <p><strong>Nombre del equipo:</strong> {{ equipo.nombre }}</p>
-            <p><strong>Descripción:</strong> {{ equipo.descripcion }}</p>
-            <p><strong>Fecha de creación:</strong> {{ equipo?.fecha_creacion | date:'dd/MM/yyyy' }}</p>
+            <div class="grid grid-cols-2 gap-4 ion-padding">
+
+              <div class="flex flex-col justify-between h-full p-2">
+                <strong class="mb-2 text-center">Posición actual:</strong>
+                <div class="flex-1 flex items-center justify-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                  <p class="text-center">{{ equipo.posicion }}</p>
+                </div>
+              </div>
+
+              <div class="flex flex-col justify-between h-full p-2">
+                <strong class="mb-2 text-center">Nombre equipo:</strong>
+                <div class="flex-1 flex items-center justify-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                  <p class="text-center">{{ equipo.nombre }}</p>
+                </div>
+              </div>
+
+              <div class="flex flex-col justify-between h-full p-2">
+                <strong class="mb-2 text-center">Descripción:</strong>
+                <div class="flex-1 flex items-center justify-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                  <p class="text-center">{{ equipo.descripcion }}</p>
+                </div>
+              </div>
+
+              <div class="flex flex-col justify-between h-full p-2">
+                <strong class="mb-2 text-center">Fecha de creación:</strong>
+                <div class="flex-1 flex items-center justify-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                  <p class="text-center">{{ equipo?.fecha_creacion | date:'dd/MM/yyyy' }}</p>
+                </div>
+              </div>
+
+            </div>
           </ion-card-content>
+
+
+
         </ion-card>
       </ng-container>
 
